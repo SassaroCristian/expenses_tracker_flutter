@@ -33,7 +33,10 @@ class _ExpensesState extends State<Expenses> {
   ];
 
   void _openAddOverlay() {
-    showModalBottomSheet(context: context, builder: builder);
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => const Text('Modal bottom sheet'),
+    );
   }
 
   @override
