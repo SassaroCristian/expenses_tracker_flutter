@@ -31,9 +31,27 @@ class _ExpensesState extends State<Expenses> {
       category: Category.food,
     ),
   ];
+
+  void _openAddOverlay() {
+    showModalBottomSheet(context: context, builder: builder);
+  }
+
   @override
   Widget build(context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('My expenses'),
+        actions: [
+          IconButton(
+            onPressed: _openAddOverlay,
+            icon: const Icon(Icons.add),
+            style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.green),
+            ),
+          ),
+        ],
+        backgroundColor: const Color.fromARGB(255, 53, 123, 55),
+      ),
       body: Column(
         children: [
           const Text('The chart'),
