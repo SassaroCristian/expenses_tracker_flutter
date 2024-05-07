@@ -46,6 +46,14 @@ class _NewExpenseState extends State<NewExpanse> {
           ),
           Row(
             children: [
+              TextButton(
+                onPressed: () {
+                  // todo add logic to exit editing and discard
+                },
+                child: const Text(
+                  'Discard',
+                ),
+              ),
               ElevatedButton(
                 onPressed: () {
                   print(_titleController.text);
@@ -55,14 +63,6 @@ class _NewExpenseState extends State<NewExpanse> {
                   'Save Expense',
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  // todo add logic to exit editing and discard
-                },
-                child: const Text(
-                  'Discard',
-                ),
-              )
             ],
           )
         ],
