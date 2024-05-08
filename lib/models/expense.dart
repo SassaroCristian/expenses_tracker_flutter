@@ -7,7 +7,7 @@ const uuid = Uuid();
 
 enum Category { food, travel, leisure, work }
 
-const categoryItems = {
+const categoryIcons = {
   Category.food: Icons.lunch_dining,
   Category.travel: Icons.flight_land,
   Category.leisure: Icons.movie,
