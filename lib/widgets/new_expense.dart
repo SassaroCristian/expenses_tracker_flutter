@@ -5,7 +5,10 @@ import 'package:expenses_tracker_flutter/models/expense.dart';
 final formatter = DateFormat.yMd();
 
 class NewExpanse extends StatefulWidget {
-  const NewExpanse({super.key});
+  const NewExpanse({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
+
   @override
   State<StatefulWidget> createState() {
     return _NewExpenseState();
@@ -32,6 +35,40 @@ class _NewExpenseState extends State<NewExpanse> {
     });
   }
 
+  void _submitExpenseData() {
+    final enteredAmout = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmout == null || enteredAmout <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid Input'),
+          content: const Text(
+              'Please make sure a valid title, amount, date and category was set.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Close'),
+            )
+          ],
+        ),
+      );
+      return;
+    }
+    widget.onAddExpense(
+      Expense(
+          title: _titleController.text,
+          amount: enteredAmout,
+          date: _selectedDate!,
+          category: _selectedCategory),
+    );
+    Navigator.pop(context);
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -45,7 +82,7 @@ class _NewExpenseState extends State<NewExpanse> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: Column(
         children: [
           TextField(
@@ -132,10 +169,7 @@ class _NewExpenseState extends State<NewExpanse> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  print(_titleController.text);
-                  print(_amountController.text);
-                },
+                onPressed: _submitExpenseData,
                 child: const Text(
                   'Save Expense',
                 ),
